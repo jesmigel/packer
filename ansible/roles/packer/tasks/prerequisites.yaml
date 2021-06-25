@@ -1,0 +1,88 @@
+---
+# Folders
+- name: Create packer payload directories
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/{{ item.0.name }}/{{ item.1 }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0775'
+    recurse: yes
+  with_nested:
+  - "{{ packer_builds }}"
+  - "{{ build_paths }}"
+  tags:
+  - packer_prerequisites
+  - packer_payload_directory
+
+# Http files: Metadata
+- name: Create empty meta-data file
+  file:
+    path: "/home/{{ ansible_user }}/{{ item.name }}/http/meta-data"
+    state: touch
+  loop: "{{ packer_builds }}"
+  tags:
+  - packer_prerequisites
+  - packer_payload_metadata
+
+# Scripts
+- name: Copy payload specific build scripts
+  ansible.builtin.copy:
+    src: "{{ item.name }}/provisioner.sh"
+    dest: "/home/{{ ansible_user }}/{{ item.name }}/scripts/provisioner.sh"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '755'
+  loop: "{{ packer_builds }}"
+  tags:
+  - packer_prerequisites
+  - packer_payload_build_scripts
+
+# Packer: vars
+- name: Generate payload specific packer vars file
+  ansible.builtin.template:
+    src: "variables.json.jinja2"
+    dest: "/home/{{ ansible_user }}/{{ item.name }}/variables.json"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '755'
+  loop: "{{ packer_builds }}"
+  tags:
+  - packer_prerequisites
+  - packer_payload_vars
+
+# Packer: user-data
+- name: Generate payload specific packer http user-data file
+  ansible.builtin.template:
+    src: "user-data.jinja2"
+    dest: "/home/{{ ansible_user }}/{{ item.name }}/http/user-data"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '755'
+  loop: "{{ packer_builds }}"
+  tags:
+  - packer_prerequisites
+  - packer_payload_userdata
+
+# Packer: user-data
+- name: Generate payload specific packer build.json file
+  ansible.builtin.template:
+    src: "build.json.jinja2"
+    dest: "/home/{{ ansible_user }}/{{ item.name }}/build.json"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '755'
+  loop: "{{ packer_builds }}"
+  tags:
+  - packer_prerequisites
+  - packer_payload_build
+
+# Packer validate files
+- name: Validate builds
+  shell:
+    cmd: "packer validate -var-file variables.json  build.json"
+    chdir: "/home/{{ ansible_user }}/{{ item.name }}"
+  loop: "{{ packer_builds }}"
+  tags:
+  - packer_prerequisites
+  - packer_payload_validation

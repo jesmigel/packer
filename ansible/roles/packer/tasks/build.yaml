@@ -1,0 +1,9 @@
+# Build packer vm template
+- name: Build packer vm template
+  shell:
+    cmd: "packer build -force -var-file variables.json build.json"
+    chdir: "/home/{{ ansible_user }}/{{ item.name }}"
+  loop: "{{ packer_builds }}"
+  tags:
+  - packer_build
+  - packer_build_template

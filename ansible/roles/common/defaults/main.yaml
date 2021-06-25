@@ -1,0 +1,22 @@
+binaries:
+- gnupg
+- software-properties-common
+- curl
+- ntp
+- resolvconf
+- make
+- python3-venv
+- gcc
+- snap
+
+handler_list:
+- restart ntp
+
+# DATETIME
+timezone: "Australia/Melbourne"
+
+# Snap List
+snap_list:
+- name: core
+  channel: latest/stable
+  classic: yes

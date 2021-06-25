@@ -1,0 +1,19 @@
+{
+    "vcenter_server"    : "{{ vcenter.server }}",
+    "vcenter_username"  : "{{ vcenter.username }}",
+    "vcenter_password"  : "{{ vcenter.password }}",
+    "vcenter_datacenter": "{{ vcenter.datacenter }}",
+    "vcenter_datastore" : "{{ vcenter.datastore }}",
+    "vcenter_host"      : "{{ vcenter.host }}",
+    "vcenter_folder"    : "{{ vcenter.folder }}",
+    "vcenter_network"   : "{{ vcenter.network }}",
+    "http_directory"    : "http",
+    "iso_urls"          : "{{ item.vars.iso_urls }}",
+    "iso_checksum_type" : "{{ item.vars.iso_checksum_type }}",
+    "iso_checksum"      : "{{ item.vars.iso_checksum }}",
+    "iso_paths"         : "{{ item.vars.iso_paths }}",
+    "vm_name"           : "{{ item.name }}",
+    "guest_os_type"     : "{{ item.vars.guest_os_type }}",
+    "ssh_username"      : "{{ item.vars.ssh_username }}",
+    "ssh_password"      : "{{ item.vars.ssh_password }}"
+}

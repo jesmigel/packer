@@ -1,0 +1,10 @@
+---
+- name: Make sure ntp is started, and is enabled on restart.
+  service:
+    name: ntp
+    state: started
+    enabled: yes
+
+- name: "Set timezone to {{ timezone }}"
+  community.general.timezone:
+    name: "{{ timezone }}"

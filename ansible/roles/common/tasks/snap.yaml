@@ -1,0 +1,9 @@
+---
+# Install a snap with from a specific channel
+- name: Install snap apps from a specific channel
+  community.general.snap:
+    name: "{{ item.name }}"
+    channel: "{{ item.channel }}"
+    classic: "{{ item.classic }}"
+  loop: "{{ snap_list }}"
+  notify: "{{ snap_handlers_list | default([]) }}"

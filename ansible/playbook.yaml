@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+  - { role: common, become: yes, tags: common }
+  - { role: hashicorp, become: yes, tags: hashicorp }
+  - { role: packer }

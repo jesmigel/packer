@@ -1,0 +1,11 @@
+---
+- name: Install hashicorp binaries
+  include_role:
+    name: common
+    tasks_from: apt.yaml
+    apply:
+      tags:
+        - hashicorp_apt
+  vars:
+    binaries: "{{ hashicorp_binaries }}"
+    handler_list: []
