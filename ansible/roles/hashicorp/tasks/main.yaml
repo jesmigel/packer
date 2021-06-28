@@ -1,6 +1,0 @@
----
-- name: Initialise Hashicorp APT repo
-  import_tasks: repo.yaml
-
-- name: Install Binaries
-  import_tasks: install.yaml
