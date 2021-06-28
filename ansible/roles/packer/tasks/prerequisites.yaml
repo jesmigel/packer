@@ -41,8 +41,8 @@
 # Packer: vars
 - name: Generate payload specific packer vars file
   ansible.builtin.template:
-    src: "variables.pkr.hcl.jinja2"
-    dest: "/home/{{ ansible_user }}/{{ item.name }}/variables.pkr.hcl"
+    src: "variables.json.jinja2"
+    dest: "/home/{{ ansible_user }}/{{ item.name }}/variables.json"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: '755'
@@ -65,10 +65,10 @@
   - packer_payload_userdata
 
 # Packer: user-data
-- name: Generate payload specific packer build.pkr.hcl file
+- name: Generate payload specific packer build.json file
   ansible.builtin.template:
-    src: "build.pkr.hcl.jinja2"
-    dest: "/home/{{ ansible_user }}/{{ item.name }}/build.pkr.hcl"
+    src: "build.json.jinja2"
+    dest: "/home/{{ ansible_user }}/{{ item.name }}/build.json"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: '755'
@@ -80,7 +80,7 @@
 # Packer validate files
 - name: Validate builds
   shell:
-    cmd: "packer validate -var-file variables.pkr.hcl  build.pkr.hcl"
+    cmd: "packer validate -var-file variables.json  build.json"
     chdir: "/home/{{ ansible_user }}/{{ item.name }}"
   loop: "{{ packer_builds }}"
   tags:
