@@ -6,9 +6,31 @@ packer_builds:
     iso_urls: "http://releases.ubuntu.com/20.04/ubuntu-20.04.2-live-server-amd64.iso"
     iso_checksum_type: "sha256"
     iso_checksum: "d1f2bf834bbe9bb43faf16f9be992a6f3935e65be0edece1dee2aa6eb1767423"
+    iso_file: "ubuntu-20.04.1-live-server-amd64.iso"
+    iso_path: "/packer_cache/"
     iso_paths: "[Datastore VMS] /packer_cache/ubuntu-20.04.1-live-server-amd64.iso"
     ssh_username: "ubuntu"
     ssh_password: "ubuntu"
+    vm_guest_os_family: "linux"
+    vm_guest_os_vendor: "ubuntu"
+    vm_guest_os_member: "server"
+    vm_guest_os_type: "ubuntu64Guest"
+    vm_guest_os_version: "20.04.1-live-server"
+    vm_cpu_sockets: 4
+    vm_cpu_cores: 1
+    vm_mem_size: 2048
+    vm_cdrom_type: "sata"
+    vm_disk_controller_type: "pvscsi"
+    vm_disk_size: 20480
+    http_directory: "http"
+    vm_boot_wait: "5s"
+    vm_boot_command: [
+      "<enter><enter><f6><esc><wait> ",
+      "autoinstall ds=nocloud-net;s=http://{{'{% raw %}{{ .HTTPIP }}:{{ .HTTPPort }}{% endraw %}'}}/",
+      "<enter>"
+    ]
+    execute_command: "echo 'ubuntu' | {{'{% raw %}{{ .Vars }}{$ endraw $}'}} sudo -S -E bash '{{'{% raw %}{{ .Path }}{% endraw %}'}}'"
+    shell_scripts: "scripts/provisioner.sh"
   user-data: >
     #cloud-config
 
@@ -43,4 +65,3 @@ packer_builds:
           - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/ubuntu
           - curtin in-target --target=/target -- apt-get update
           - curtin in-target --target=/target -- apt-get upgrade --yes
-  build: {}
