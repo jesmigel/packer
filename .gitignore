@@ -8,3 +8,7 @@ env.yaml
 # Roles
 ansible/roles/common
 ansible/roles/hashicorp
+
+# Packer
+*packer_cache*
+variables.json
