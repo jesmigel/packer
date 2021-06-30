@@ -1,0 +1,33 @@
+#cloud-config
+
+autoinstall:
+  version: 1
+  early-commands:
+    # Stop ssh for packer
+    - sudo systemctl stop ssh
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  identity:
+    hostname: ubuntu-server
+    username: ubuntu
+    password: $6$dObI9Pd0j9RnShRx$1MvWGmZ/7dHZ8mw83xMvYlV3H5E1JzInc7SglFEUgR903ClErXKDG.GSr4HMHaOadkAWlMYhXsaKTHLRyP4yP1
+  ssh:
+    install-server: true
+    allow-pw: true
+  storage:
+    layout:
+      name: direct
+  apt:
+    primary:
+      - arches: [i386, amd64]
+        uri: "http://ro.archive.ubuntu.com/ubuntu/"
+  user-data:
+    disable_root: false
+  late-commands:
+    - sed -i -e 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /target/etc/ssh/sshd_config
+    - sed -i -e 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /target/etc/ssh/sshd_config
+    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+    - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/ubuntu
+    - curtin in-target --target=/target -- apt-get update
+    - curtin in-target --target=/target -- apt-get upgrade --yes

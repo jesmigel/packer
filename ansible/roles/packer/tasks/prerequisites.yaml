@@ -66,8 +66,8 @@
 
 # Packer: user-data
 - name: Generate payload specific packer http user-data file
-  ansible.builtin.template:
-    src: "user-data.jinja2"
+  ansible.builtin.copy:
+    src: "{{ item.name }}/user-data"
     dest: "/home/{{ ansible_user }}/{{ item.name }}/http/user-data"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -77,7 +77,7 @@
   - packer_prerequisites
   - packer_payload_userdata
 
-# Packer: user-data
+# Packer: build paylod
 - name: Generate payload specific packer build.pkr.hcl file
   ansible.builtin.template:
     src: "build.pkr.hcl.jinja2"
