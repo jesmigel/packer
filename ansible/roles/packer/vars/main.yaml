@@ -28,7 +28,7 @@ packer_builds:
       "autoinstall ds=nocloud-net;s=http://{{'{% raw %}{{ .HTTPIP }}:{{ .HTTPPort }}{% endraw %}'}}/",
       "<enter>"
     ]
-    execute_command: "echo 'ubuntu' | {{'{% raw %}{{ .Vars }}{$ endraw $}'}} sudo -S -E bash '{{'{% raw %}{{ .Path }}{% endraw %}'}}'"
+    execute_command: "echo 'ubuntu' | {{'{% raw %}{{ .Vars }}{% endraw %}'}} sudo -S -E bash '{{'{% raw %}{{ .Path }}{% endraw %}'}}'"
     shell_scripts: "scripts/provisioner.sh"
   user-data: >
     #cloud-config
