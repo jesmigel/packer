@@ -7,3 +7,12 @@
   tags:
   - packer_build
   - packer_build_template
+
+- name: Copy artifacts to local
+  ansible.posix.synchronize:
+    src: "/home/{{ ansible_user }}/{{ item.name }}"
+    dest: "../artifacts/"
+    mode: pull
+  loop: "{{ packer_builds }}"
+  tags:
+  - fetch

@@ -27,7 +27,7 @@ vm_disk_size                    = "{{ item.vars.vm_disk_size }}"
 ##################################################################################
 http_directory                  = "{{ item.vars.http_directory }}"
 vm_boot_wait                    = "{{ item.vars.vm_boot_wait }}"
-vm_boot_command                 = ["{{ item.vars.vm_boot_command | join(",") }}"]
+vm_boot_command                 = ["{{ item.vars.vm_boot_command | join('","') }}"]
 ssh_username                    = "{{ item.vars.ssh_username }}"
 ssh_password                    = "{{ item.vars.ssh_password }}"
 shell_scripts                   = ["{{ item.vars.shell_scripts }}"]
