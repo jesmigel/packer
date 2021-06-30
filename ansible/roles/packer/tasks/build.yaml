@@ -13,6 +13,10 @@
     src: "/home/{{ ansible_user }}/{{ item.name }}"
     dest: "../artifacts/"
     mode: pull
+    rsync_opts:
+        - "--no-motd"
+        - "--exclude packer_cache"
+        - "--exclude vcenter.pkr.hcl"
   loop: "{{ packer_builds }}"
   tags:
   - fetch
