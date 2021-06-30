@@ -38,6 +38,19 @@
   - packer_prerequisites
   - packer_payload_build_scripts
 
+# Packer: vcenter
+- name: Generate payload specific packer vcenter file
+  ansible.builtin.template:
+    src: "vcenter.pkr.hcl.jinja2"
+    dest: "/home/{{ ansible_user }}/{{ item.name }}/vcenter.pkr.hcl"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '755'
+  loop: "{{ packer_builds }}"
+  tags:
+  - packer_prerequisites
+  - packer_payload_vars
+
 # Packer: vars
 - name: Generate payload specific packer vars file
   ansible.builtin.template:
@@ -80,7 +93,7 @@
 # Packer validate files
 - name: Validate builds
   shell:
-    cmd: "packer validate -var-file variables.pkr.hcl  build.pkr.hcl"
+    cmd: "packer validate -var-file vcenter.pkr.hcl -var-file variables.pkr.hcl build.pkr.hcl"
     chdir: "/home/{{ ansible_user }}/{{ item.name }}"
   loop: "{{ packer_builds }}"
   tags:
