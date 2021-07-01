@@ -6,8 +6,7 @@ env.yaml
 .venv
 
 # Roles
-ansible/roles/common
-ansible/roles/hashicorp
+roles
 
 # Packer
 *packer_cache*

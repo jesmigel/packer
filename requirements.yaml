@@ -5,3 +5,6 @@
 - src: https://github.com/jesmigel/ansible-role-hashicorp.git
   name: hashicorp
   version: v1.0
+- src: https://github.com/jesmigel/ansible-role-packer.git
+  name: packer
+  version: v1.0

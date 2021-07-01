@@ -1,6 +1,0 @@
----
-- name: Generate packer build prerequisites
-  import_tasks: prerequisites.yaml
-
-- name: Build new template
-  import_tasks: build.yaml

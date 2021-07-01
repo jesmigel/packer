@@ -153,7 +153,7 @@ Vagrant.configure('2') do |config|
     config.vm.provision "ansible" do |ansible|
       ansible.config_file          = 'ansible.cfg'
       ansible.extra_vars           = payload['ansible']['extra_vars']
-      ansible.playbook             = "./ansible/playbook.yaml"
+      ansible.playbook             = "./playbook.yaml"
       ansible.limit                = "all"
       ansible.tags                 = ['all']
     end

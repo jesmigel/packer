@@ -1,5 +1,4 @@
 #cloud-config
-
 autoinstall:
   version: 1
   early-commands:

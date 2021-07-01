@@ -1,0 +1,3 @@
+warn_list:  # or 'skip_list' to silence them completely
+  - no-tabs  # Most files should not contain tabs
+  - no-changed-when  # Commands should not change things if nothing needs doing. Ignored as directory may change rather than command

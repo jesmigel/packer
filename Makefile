@@ -12,6 +12,9 @@ config:
 down:
 	$(call venv_exec,.venv,$(_VM) suspend)
 
+lint:
+	$(call venv_exec,.venv,ansible-lint --project-dir=.)
+
 login:
 	$(call venv_exec,.venv,$(_VM) ssh)
 
@@ -30,7 +33,7 @@ venv_init:
 	$(call venv_exec,.venv,pip install --upgrade pip)
 	$(call venv_exec,.venv,pip install -r requirements.txt)
 
-_DIR_ROLES=ansible/roles
+_DIR_ROLES=roles
 roles_init:
 	mkdir -p $(_DIR_ROLES)
 	$(call venv_exec,.venv,ansible-galaxy install -r requirements.yaml -p $(_DIR_ROLES))

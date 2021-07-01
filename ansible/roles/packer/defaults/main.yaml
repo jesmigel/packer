@@ -1,7 +1,0 @@
----
-build_paths:
-  - http
-  - scripts
-
-http_files:
-  - meta-data
