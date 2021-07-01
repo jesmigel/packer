@@ -10,6 +10,7 @@ General packer templates
 ###  Builds
 
 ### ToDo
+- Segregate packer role from packer config as repo
 - CentOS/Rocky Linux
 - Documentation
 - Diagrams
